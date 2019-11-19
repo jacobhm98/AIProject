@@ -1,0 +1,11 @@
+#!/bin/bash
+
+javac ./*.java
+
+echo "How many days should we predict?"
+read predDays
+echo "Which index should we generate prediction for?"
+read index
+
+python stock.py predDays index > java InferenceEngine
+
