@@ -3,12 +3,20 @@ import java.util.*;
 public class InferenceEngine{
 	
 	public static void main(String args[]){
-		Kattio io = new Kattio(System.in, System.out);
-		ArrayList<Integer> predictions = new ArrayList<>();
-		while(io.hasMoreTokens()){
-			int nextDay = io.getInt();
-			predictions.add(nextDay);
+		String separator = "END";
+		Scanner in = new Scanner(System.in);
+		ArrayList<Integer> LRPredictions = new ArrayList<>();
+		ArrayList<Integer> SVRPredictions = new ArrayList<>();
+		String c = in.nextLine();
+		while(!c.equals(separator)){
+			LRPredictions.add(Integer.parseInt(c));
+			c = in.nextLine();
 		}
+		while(in.hasNext()){
+			c = in.nextLine();
+			SVRPredictions.add(Integer.parseInt(c));
+		}
+		
 
 	}
 
