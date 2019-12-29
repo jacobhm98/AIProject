@@ -1,6 +1,10 @@
 #!/bin/python
 
 import tkinter as tk
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.figure import Figure
 
 LARGE_FONT= ("Verdana", 12)
 SMALL_FONT= ("Verdana", 8)
@@ -15,7 +19,7 @@ class StockDSS(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
         self.frames = {}
        
-        for F in (StartPage, PageOne, PageTwo, PageThree):
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -38,7 +42,8 @@ class StartPage(tk.Frame):
         button2.pack()
         button3 = tk.Button(self, text="Visit Page 3", command=lambda: controller.show_frame(PageThree))
         button3.pack()        
-
+        button4 = tk.Button(self, text="Visit Page 4", command=lambda: controller.show_frame(PageFour))
+        button4.pack()
  
 
 class PageOne(tk.Frame):
@@ -49,6 +54,16 @@ class PageOne(tk.Frame):
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
 
+        f = Figure(figsize = (5, 5), dpi = 100)
+        a = f.add_subplot(111)
+        a.plot([1,2,3,4,5,6,7,8], [5,1,2,3,6,6,7,8])
+        canvas = FigureCanvasTkAgg(f, self)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill = tk.BOTH, expand = True)
+        toolbar = NavigationToolbar2Tk(canvas, self)
+        toolbar.update()
+        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
 class PageTwo(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -57,6 +72,19 @@ class PageTwo(tk.Frame):
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
 
+        f = Figure(figsize = (5, 5), dpi = 100)
+        a = f.add_subplot(111)
+        a.plot([1,2,3,4,5,6,7,8], [5,1,2,3,6,6,7,8])
+        canvas = FigureCanvasTkAgg(f, self)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill = tk.BOTH, expand = True)
+        toolbar = NavigationToolbar2Tk(canvas, self)
+        toolbar.update()
+        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+
+
+
 class PageThree(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -64,6 +92,25 @@ class PageThree(tk.Frame):
         label.pack(padx=10, pady=10)
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
+
+        f = Figure(figsize = (5, 5), dpi = 100)
+        a = f.add_subplot(111)
+        a.plot([1,2,3,4,5,6,7,8], [5,1,2,3,6,6,7,8])
+        canvas = FigureCanvasTkAgg(f, self)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill = tk.BOTH, expand = True)
+        toolbar = NavigationToolbar2Tk(canvas, self)
+        toolbar.update()
+        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+class PageFour(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text= "Our Recommendation", font = LARGE_FONT)
+        label.pack(padx = 10, pady = 10)
+        button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
+        button1.pack()
+
 
 app = StockDSS()
 app.mainloop()
