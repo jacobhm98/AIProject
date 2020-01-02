@@ -10,6 +10,7 @@ from Prediction import Prediction
 
 LARGE_FONT= ("Verdana", 12)
 SMALL_FONT= ("Verdana", 8)
+
 pred = Prediction()
 stock_prices = pred.stockprices("GOOGL", 35)
 svm_array, lr_array, svm_confidence, lr_confidence, volume = pred.inference("GOOGL", 15000, 30, 3)
@@ -41,14 +42,14 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="This is the startpage", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
-        button = tk.Button(self, text="Visit Page 1", command=lambda: controller.show_frame(PageOne))
+        button = tk.Button(self, text="SVM Prediction", command=lambda: controller.show_frame(PageOne))
         button.pack()
         
-        button2 = tk.Button(self, text="Visit Page 2", command=lambda: controller.show_frame(PageTwo))
+        button2 = tk.Button(self, text="LVR Prediction", command=lambda: controller.show_frame(PageTwo))
         button2.pack()
-        button3 = tk.Button(self, text="Visit Page 3", command=lambda: controller.show_frame(PageThree))
+        button3 = tk.Button(self, text="Stock prices", command=lambda: controller.show_frame(PageThree))
         button3.pack()        
-        button4 = tk.Button(self, text="Visit Page 4", command=lambda: controller.show_frame(PageFour))
+        button4 = tk.Button(self, text="Our recommendation", command=lambda: controller.show_frame(PageFour))
         button4.pack()
  
 

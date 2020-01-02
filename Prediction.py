@@ -70,8 +70,8 @@ class Prediction:
                                               endDate=cDate)
         
         #Array of previous volumes
-        X = np.array(ticker_history['volume'])
-        Y = np.array(ticker_history_last['volume'])
+        X = np.median(ticker_history['volume'])
+        Y = np.average(ticker_history_last['volume'])
         #print(X)
         #print(Y)
         
