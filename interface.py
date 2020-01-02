@@ -6,14 +6,17 @@ matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
 from Prediction import Prediction
-
+import sys
 
 LARGE_FONT= ("Verdana", 12)
 SMALL_FONT= ("Verdana", 8)
 
 pred = Prediction()
-stock_prices = pred.stockprices("GOOGL", 35)
-svm_array, lr_array, svm_confidence, lr_confidence, volume = pred.inference("GOOGL", 15000, 30, 3)
+Stock = "GOOGL"
+if (len(sys.argv) > 1):
+    Stock = sys.argv[1]
+stock_prices = pred.stockprices(Stock, 35)
+svm_array, lr_array, svm_confidence, lr_confidence, volume = pred.inference(Stock, 15000, 30, 3)
 
 
 class StockDSS(tk.Tk):
@@ -142,11 +145,11 @@ def predictionText():
      momentum2 = 1 - lr_array[5]/lr_array[0]
 
     if(lrIncreasing == True and svmIncreasing == True):
-     text1 = "Both our predictions show that the stock price is increasing over the coming five days." + "The price is expected to increasy by " +  str(round((momentum1 + momentum2)/2 * 100), 2) + " \n"
-     sell = True
+        text1 = "Both our predictions show that the stock price is increasing over the coming five days." + "The price is expected to increasy by " +  str(round((momentum1 + momentum2)/2 * 100, 2) + " \n"
     elif(lrIncreasing != svmIncreasing):
-     text1 = "Our predictions do not match each other. \n"
-     conflictingPred = True
+        text1 = "Our predictions do not match each other. \n"
+        conflictingPred = True
+    
     else:
         text1 = "Both our predictions show that the stock price is decreasing over the coming five days. The price is expected to decrease  by " +  str(round((momentum1 + momentum2)/2 * 100, 2)) + "%. \n"
         
