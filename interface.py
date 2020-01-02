@@ -116,8 +116,6 @@ class PageFour(tk.Frame):
         label.pack(padx = 10, pady = 10)
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
-<<<<<<< HEAD
-=======
         text = tk.Text(self, height = 10, width = 50, font = SMALL_FONT)
         scrollbar = tk.Scrollbar(self)
         scrollbar.pack(side = tk.RIGHT, fill = tk.Y)
@@ -128,8 +126,6 @@ class PageFour(tk.Frame):
         text.insert(tk.END, quote)
         
 # def predictionText():
-
->>>>>>> jacob
 
 
 app = StockDSS()
