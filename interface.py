@@ -1,4 +1,4 @@
-#!/ova/clguba
+#!/bin/python
 
 import tkinter as tk
 import matplotlib
@@ -119,29 +119,40 @@ class PageFour(tk.Frame):
         text.pack(pady = 10, padx = 10, side = "top", fill = "both", expand = True)
         scrollbar.config(command = text.yview)
         text.config(yscrollcommand = scrollbar.set)
-        quote = "this is our prediction asdfasdfasdfasdf asdfasdfa asdfafasdfasdf asdfasdf"
+        quote = predictionText()
         text.insert(tk.END, quote)
         
 def predictionText():
-    if (svm_array[5]/svm_array[0] > 1):
-        svmIncreasing = True
-        momentum1 = svm_array[5]/svm_array[0] - 1
-    elif (svm_array[5]/svm_array[0] < 1):
-        svmIncreasing = False
-        momentum1 = 1 - svm_array[5]/svm_array[0]
+    if(svm_array[5]/svm_array[0] > 1):
+     svmIncreasing = True
+     momentum1 = svm_array[5]/svm_array[0] - 1
+    else:
+     svmIncreasing = False
+     momentum1 = 1 - svm_array[5]/svm_array[0]
    
-   if (lr_array[5]/lr_array[0] > 1):
-        lrIncreasing = True
-        momentum2 = svm_array[5]/svm_array[0] - 1
-    elif (lr_array[5]/lr_array[0] < 1):
-        lrIncreasing = False
-        momentum2 = 1 - lr_array[5]/lr_array[0]
-   if(lrIncreasing == True && svmIncreasing == True):
-       return "
-    
+    if(lr_array[5]/lr_array[0] > 1):
+     lrIncreasing = True
+     momentum2 = svm_array[5]/svm_array[0] - 1
+    else: 
+     lrIncreasing = False
+     momentum2 = 1 - lr_array[5]/lr_array[0]
 
+    if(lrIncreasing == True and svmIncreasing == True):
+     text1 = "Both our predictions show that the stock price is increasing over the coming five days. \n"
+     sell = True
+    elif(lrIncreasing != svmIncreasing):
+     text1 = "Our predictions do not match each other. \n"
+     conflictingPred = True
+    else:
+        text1 = "Both our predictions show that the stock price is decreasing over the coming five days. \n"
+        
+    if volume > 1:
+       text2 = "The recent volume of transactions is high, we recommend you take action!. \n"
+    else:
+        text2 = "There has been low mobility in the market recently, not taking action may be the best current course of action. \n"
 
-
+    text3 = "Our confidence in the Linear Regression models prediction is " + str(round(lr_confidence * 100, 2)) + "%. Our confidence in the Support Vector models prediction is " + str(round(svm_confidence * 100, 2)) +"%."
+    return text1 + text2 + text3
 
 app = StockDSS()
 app.mainloop()
