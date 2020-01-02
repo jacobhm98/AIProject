@@ -125,7 +125,7 @@ class PageFour(tk.Frame):
         quote = "this is our prediction asdfasdfasdfasdf asdfasdfa asdfafasdfasdf asdfasdf"
         text.insert(tk.END, quote)
         
-def predictionText():
+# def predictionText():
 
 
 
