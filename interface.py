@@ -1,4 +1,4 @@
-#!/bin/python
+#!/ova/clguba
 
 import tkinter as tk
 import matplotlib
@@ -126,7 +126,25 @@ class PageFour(tk.Frame):
         quote = "this is our prediction asdfasdfasdfasdf asdfasdfa asdfafasdfasdf asdfasdf"
         text.insert(tk.END, quote)
         
-# def predictionText():
+def predictionText():
+    if (svm_array[5]/svm_array[0] > 1):
+        svmIncreasing = True
+        momentum1 = svm_array[5]/svm_array[0] - 1
+    elif (svm_array[5]/svm_array[0] < 1):
+        svmIncreasing = False
+        momentum1 = 1 - svm_array[5]/svm_array[0]
+   
+   if (lr_array[5]/lr_array[0] > 1):
+        lrIncreasing = True
+        momentum2 = svm_array[5]/svm_array[0] - 1
+    elif (lr_array[5]/lr_array[0] < 1):
+        lrIncreasing = False
+        momentum2 = 1 - lr_array[5]/lr_array[0]
+   if(lrIncreasing == True && svmIncreasing == True):
+       return "
+    
+
+
 
 
 app = StockDSS()
