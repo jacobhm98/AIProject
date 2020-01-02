@@ -5,9 +5,14 @@ import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
+from Prediction import Prediction
+
 
 LARGE_FONT= ("Verdana", 12)
 SMALL_FONT= ("Verdana", 8)
+pred = Prediction()
+svm_array, lr_array, svm_confidence, lr_confidence, volume = pred.inference("GOOGL", 15000, 30, 3)
+stock_prices = pred.stockprices("GOOGL", 35)
 
 class StockDSS(tk.Tk):
 
@@ -49,14 +54,14 @@ class StartPage(tk.Frame):
 class PageOne(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page One", font=LARGE_FONT)
+        label = tk.Label(self, text="Support Vector Prediction", font=LARGE_FONT)
         label.pack(padx=10, pady=10)
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
 
         f = Figure(figsize = (5, 5), dpi = 100)
         a = f.add_subplot(111)
-        a.plot([1,2,3,4,5,6,7,8], [5,1,2,3,6,6,7,8])
+        a.plot(range(1, 31), svm_array)
         canvas = FigureCanvasTkAgg(f, self)
         canvas.draw()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill = tk.BOTH, expand = True)
@@ -67,14 +72,14 @@ class PageOne(tk.Frame):
 class PageTwo(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page Two", font=LARGE_FONT)
+        label = tk.Label(self, text="Linear Regression Prediction", font=LARGE_FONT)
         label.pack(padx=10, pady=10)
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
 
         f = Figure(figsize = (5, 5), dpi = 100)
         a = f.add_subplot(111)
-        a.plot([1,2,3,4,5,6,7,8], [5,1,2,3,6,6,7,8])
+        a.plot(range(1, 31), lr_array)
         canvas = FigureCanvasTkAgg(f, self)
         canvas.draw()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill = tk.BOTH, expand = True)
@@ -95,7 +100,7 @@ class PageThree(tk.Frame):
 
         f = Figure(figsize = (5, 5), dpi = 100)
         a = f.add_subplot(111)
-        a.plot([1,2,3,4,5,6,7,8], [5,1,2,3,6,6,7,8])
+        a.plot(range(1, stock_prices.size + 1), stock_prices)
         canvas = FigureCanvasTkAgg(f, self)
         canvas.draw()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill = tk.BOTH, expand = True)
