@@ -10,5 +10,5 @@ import array as arr
 pred = Prediction()
 a = arr.array('d')
 b = arr.array('d')
-a, b, c, d = pred.predict("2016/01/01", "2019/11/06")
-print(a[0], b, c, d)
+a, b, c, d, e = pred.inference("GOOGL", 15000, 30, 3)
+print(a[0], b[0], c, d, e)
