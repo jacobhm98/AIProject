@@ -98,7 +98,7 @@ class PageTwo(tk.Frame):
 class PageThree(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Stock Prices Past 30 days", font=LARGE_FONT)
+        label = tk.Label(self, text=Stock + " Past 30 days", font=LARGE_FONT)
         label.pack(padx=10, pady=10)
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
@@ -144,19 +144,19 @@ def predictionText():
      lrIncreasing = False
      momentum2 = 1 - lr_array[5]/lr_array[0]
 
-    if(lrIncreasing == True and svmIncreasing == True):
-        text1 = "Both our predictions show that the stock price is increasing over the coming five days." + "The price is expected to increasy by " +  str(round((momentum1 + momentum2)/2 * 100, 2)) + " \n"
-    elif(lrIncreasing != svmIncreasing):
-        text1 = "Our predictions do not match each other. \n"
-        conflictingPred = True
+    if (lrIncreasing == True and svmIncreasing == True):
+        text1 = "Both our predictions show that the stock price is increasing over the coming five days." + "The price is expected to increase by " +  str(round((momentum1 + momentum2)/2 * 100, 2)) + " \n"
+   
+    elif lrIncreasing != svmIncreasing:
+      text1 = "Our predictions do not match each other. \n"
     
     else:
         text1 = "Both our predictions show that the stock price is decreasing over the coming five days. The price is expected to decrease  by " +  str(round((momentum1 + momentum2)/2 * 100, 2)) + "%. \n"
         
     if volume > 1:
-        text2 = "The recent volume of transactions is high, we recommend you take action!. \n"
+      text2 = "The recent volume of transactions is high, we recommend you take action!. \n"
     else:
-        text2 = "There has been low mobility in the market recently, not taking action may be the best current course of action. \n"
+      text2 = "There has been low mobility in the market recently, not taking action may be the best current course of action. \n"
 
     text3 = "Our confidence in the Linear Regression models prediction is " + str(round(lr_confidence * 100, 2)) + "%. Our confidence in the Support Vector models prediction is " + str(round(svm_confidence * 100, 2)) +"%."
     return text1 + text2 + text3
