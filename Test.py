@@ -12,3 +12,6 @@ a = arr.array('d')
 b = arr.array('d')
 a, b, c, d, e = pred.inference("GOOGL", 15000, 30, 3)
 print(a[0], b[0], c, d, e)
+
+s = pred.stockprices("GOOGL", 10)
+print(s)

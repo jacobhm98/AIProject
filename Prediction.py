@@ -36,6 +36,22 @@ class Prediction:
         
         return prevDate, currentDate
     
+    def stockprices(this_object, stock, days):
+        config = {}
+        config['session'] = True
+        #Probably shouldn't use my API-key
+        config['api_key'] = "5bb2f699440e3f8aeba0b5d8ab6467c00af165bc"
+        
+        prevDate, currentDate = this_object.dates(days)
+
+        client = TiingoClient(config)
+        ticker_history = client.get_dataframe(stock, startDate=prevDate, 
+                                              endDate=currentDate)
+        
+        X = np.array(ticker_history['close'])
+        
+        return X
+    
     def volume(this_object, stock, days, prevDays):
         config = {}
         config['session'] = True
@@ -76,7 +92,9 @@ class Prediction:
  
         ticker_history = ticker_history[['close']]
         
-        #print(ticker_history.tail(10))
+        #print(ticker_history.tail(1))
+        L = np.array(ticker_history.tail(1))
+        #print (L[0])
         
         # A variable for predicting 'n' days out into the future
         forecast_out = 30 #forecast_out = 'n=30' days
@@ -131,8 +149,17 @@ class Prediction:
         #print(svm_prediction)
         
         svm_array = arr.array('d',svm_prediction)
-        lr_array = arr.array('d',lr_prediction)
+        lr_array = arr.array('d',lr_prediction)      
         
+        # Centers prediction around last known value
+        diff_svm = L[0] - svm_array[0]
+        diff_lr = L[0] - lr_array[0]
+        count = 0
+        while count < 30:
+            svm_array[count] = (svm_array[count] + diff_svm)
+            lr_array[count] = (lr_array[count] + diff_lr)
+            count += 1
+            
         return svm_array, lr_array, svm_confidence, lr_confidence  
     
     def inference(this_object, stock, predDays, prevVolume, baseVolume):

@@ -12,7 +12,7 @@ LARGE_FONT= ("Verdana", 12)
 SMALL_FONT= ("Verdana", 8)
 pred = Prediction()
 svm_array, lr_array, svm_confidence, lr_confidence, volume = pred.inference("GOOGL", 15000, 30, 3)
-
+stock_prices = pred.stockprices("GOOGL", 35)
 
 class StockDSS(tk.Tk):
 
@@ -100,7 +100,7 @@ class PageThree(tk.Frame):
 
         f = Figure(figsize = (5, 5), dpi = 100)
         a = f.add_subplot(111)
-        a.plot(range(1, 31), [5,1,2,3,6,6,7,8])
+        a.plot(range(1, stock_prices.size + 1), stock_prices)
         canvas = FigureCanvasTkAgg(f, self)
         canvas.draw()
         canvas.get_tk_widget().pack(side=tk.BOTTOM, fill = tk.BOTH, expand = True)
