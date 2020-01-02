@@ -44,7 +44,6 @@ class StartPage(tk.Frame):
         label.pack(pady=10, padx=10)
         button = tk.Button(self, text="SVM Prediction", command=lambda: controller.show_frame(PageOne))
         button.pack()
-        
         button2 = tk.Button(self, text="LVR Prediction", command=lambda: controller.show_frame(PageTwo))
         button2.pack()
         button3 = tk.Button(self, text="Stock prices", command=lambda: controller.show_frame(PageThree))
@@ -88,9 +87,6 @@ class PageTwo(tk.Frame):
         toolbar = NavigationToolbar2Tk(canvas, self)
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-
-
-
 
 class PageThree(tk.Frame):
     def __init__(self, parent, controller):
