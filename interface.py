@@ -40,10 +40,11 @@ class StockDSS(tk.Tk):
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="This is the startpage", font=LARGE_FONT)
+        label = tk.Label(self, text="Stock Predicting Decision Support System", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
         button = tk.Button(self, text="SVM Prediction", command=lambda: controller.show_frame(PageOne))
         button.pack()
+        
         button2 = tk.Button(self, text="LVR Prediction", command=lambda: controller.show_frame(PageTwo))
         button2.pack()
         button3 = tk.Button(self, text="Stock prices", command=lambda: controller.show_frame(PageThree))
@@ -88,10 +89,13 @@ class PageTwo(tk.Frame):
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
+
+
+
 class PageThree(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page Three", font=LARGE_FONT)
+        label = tk.Label(self, text="Stock Prices Past 30 days", font=LARGE_FONT)
         label.pack(padx=10, pady=10)
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
@@ -113,7 +117,7 @@ class PageFour(tk.Frame):
         label.pack(padx = 10, pady = 10)
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
-        text = tk.Text(self, height = 10, width = 50, font = SMALL_FONT)
+        text = tk.Text(self, height = 10, width = 50, font = LARGE_FONT)
         scrollbar = tk.Scrollbar(self)
         scrollbar.pack(side = tk.RIGHT, fill = tk.Y)
         text.pack(pady = 10, padx = 10, side = "top", fill = "both", expand = True)
