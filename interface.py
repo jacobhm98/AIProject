@@ -92,9 +92,6 @@ class PageTwo(tk.Frame):
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
-
-
-
 class PageThree(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -151,7 +148,7 @@ def predictionText():
       text1 = "Our predictions do not match each other. \n"
     
     else:
-        text1 = "Both our predictions show that the stock price is decreasing over the coming five days. The price is expected to decrease  by " +  str(round((momentum1 + momentum2)/2 * 100, 2)) + "%. \n"
+        text1 = "Both our predictions show that the stock price is decreasing over the coming five days. The price is expected to decrease by " +  str(round((momentum1 + momentum2)/2 * 100, 2)) + "%. \n"
         
     if volume > 1:
       text2 = "The recent volume of transactions is high, we recommend you take action!. \n"
