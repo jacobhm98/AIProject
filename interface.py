@@ -77,8 +77,10 @@ class PageOne(tk.Frame):
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
 
+        #embedding a matplotlib graph
         f = Figure(figsize = (5, 5), dpi = 100)
         a = f.add_subplot(111)
+        #plotting 30 days of data from the svm prediction
         a.plot(range(1, 31), svm_array)
         canvas = FigureCanvasTkAgg(f, self)
         canvas.draw()
@@ -87,6 +89,7 @@ class PageOne(tk.Frame):
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
+#works the same as PageOne
 class PageTwo(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -107,7 +110,7 @@ class PageTwo(tk.Frame):
 
 
 
-
+#works the same as p1 and p2, but plots the past 30 days of the stock market
 class PageThree(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -126,6 +129,7 @@ class PageThree(tk.Frame):
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
+#a page containing our automatically generated predictions
 class PageFour(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -133,18 +137,22 @@ class PageFour(tk.Frame):
         label.pack(padx = 10, pady = 10)
         button1 = tk.Button(self, text = "home", command = lambda: controller.show_frame(StartPage))
         button1.pack()
+        #creating a textbox
         text = tk.Text(self, height = 10, width = 50, font = LARGE_FONT)
         scrollbar = tk.Scrollbar(self)
         scrollbar.pack(side = tk.RIGHT, fill = tk.Y)
         text.pack(pady = 10, padx = 10, side = "top", fill = "both", expand = True)
         scrollbar.config(command = text.yview)
         text.config(yscrollcommand = scrollbar.set)
+        #generating the text to put in the textbox
         quote = predictionText()
         text.insert(tk.END, quote)
         
 def predictionText():
+    #checking if both predictions are rising/falling/mismatched
     if(svm_array[5]/svm_array[0] > 1):
      svmIncreasing = True
+     #momentum is defined as percentage of increase/decrease of prediction day5 compared to current latest closing price
      momentum1 = svm_array[5]/svm_array[0] - 1
     else:
      svmIncreasing = False
@@ -156,7 +164,7 @@ def predictionText():
     else: 
      lrIncreasing = False
      momentum2 = 1 - lr_array[5]/lr_array[0]
-
+    #print how our predictions behave, as well as the momentum of the two predictions
     if (lrIncreasing == True and svmIncreasing == True):
         text1 = "Both our predictions show that the stock price is increasing over the coming five days." + " The price is expected to increase by " +  str(round((momentum1 + momentum2)/2 * 100, 2)) + "%. \n"
    
@@ -165,7 +173,7 @@ def predictionText():
     
     else:
         text1 = "Both our predictions show that the stock price is decreasing over the coming five days. The price is expected to decrease  by " +  str(round((momentum1 + momentum2)/2 * 100, 2)) + "%. \n"
-        
+    #volume is fetched along with the predictions, it compares the short term (5 days) average volume versus a medium term mean (30 days) 
     if volume > 1:
       text2 = "The recent volume of transactions is high, we recommend you take action! \n"
     else:
