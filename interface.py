@@ -9,49 +9,62 @@ from Prediction import Prediction
 import sys
 
 LARGE_FONT= ("Verdana", 12)
-SMALL_FONT= ("Verdana", 8)
 
 pred = Prediction()
+
+#setting stock to be fetched if no argument is given
 Stock = "GOOGL"
+#reading the argument the interface is created with and setting this as the stock to be fetched using tiingo client
 if (len(sys.argv) > 1):
     Stock = sys.argv[1]
+#fetching the data using the client
 stock_prices = pred.stockprices(Stock, 35)
+#Training the models and generating the predictions
 svm_array, lr_array, svm_confidence, lr_confidence, volume = pred.inference(Stock, 15000, 30, 3)
 
-
+#creating a container for a TkInterface, initializing the app and all its pages
 class StockDSS(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
+        #create a tk frame which will hold the current page being displayed
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
+        #list holding the different frames 
         self.frames = {}
-       
+        #initializing the frames/pages we are going to display
         for F in (StartPage, PageOne, PageTwo, PageThree, PageFour):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
         
+        #bring up the startpage
         self.show_frame(StartPage)
 
+    #bring given frame to front
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
 
+#This is how we make the actual pages. They are classes which inherit from tk.Frame.
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        #Title of page 
         label = tk.Label(self, text="Stock Predicting Decision Support System", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
+        #button which brings you to the svm prediction page
         button = tk.Button(self, text="SVM Prediction", command=lambda: controller.show_frame(PageOne))
         button.pack()
-        
+        #button which brings you to the lvr prediction page 
         button2 = tk.Button(self, text="LVR Prediction", command=lambda: controller.show_frame(PageTwo))
         button2.pack()
+        #button showing graph of past 30 days stock prices
         button3 = tk.Button(self, text="Stock prices", command=lambda: controller.show_frame(PageThree))
         button3.pack()        
+        #link to page showing our generated prediction
         button4 = tk.Button(self, text="Our recommendation", command=lambda: controller.show_frame(PageFour))
         button4.pack()
  
@@ -91,6 +104,9 @@ class PageTwo(tk.Frame):
         toolbar = NavigationToolbar2Tk(canvas, self)
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+
+
 
 class PageThree(tk.Frame):
     def __init__(self, parent, controller):
@@ -148,7 +164,7 @@ def predictionText():
       text1 = "Our predictions do not match each other. \n"
     
     else:
-        text1 = "Both our predictions show that the stock price is decreasing over the coming five days. The price is expected to decrease by " +  str(round((momentum1 + momentum2)/2 * 100, 2)) + "%. \n"
+        text1 = "Both our predictions show that the stock price is decreasing over the coming five days. The price is expected to decrease  by " +  str(round((momentum1 + momentum2)/2 * 100, 2)) + "%. \n"
         
     if volume > 1:
       text2 = "The recent volume of transactions is high, we recommend you take action! \n"
